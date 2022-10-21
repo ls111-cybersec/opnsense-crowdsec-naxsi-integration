@@ -1,0 +1,19 @@
+name: ls111/opnsense_naxsi_logs
+description: "Parse NAXSI error logs on OPNSense firewall"
+filter: "evt.Parsed.program == 'naxsi'"
+onsuccess: next_stage
+nodes:
+ - grok:
+     pattern: '%{DATESTAMP:timestamp} \[error] %{NUMBER}\#%{NUMBER}: \*%{NUMBER} NAXSI_FMT: ip=%{IPORHOST}&server=%{IPORHOST:serverip}&uri=%{URIPATHPARAM:server_uri}&vers=%{NUMBER}&total_processed=%{NUMBER}&total_blocked=%{NUMBER}&config=block&cscore0=%{DATA}&score0=%{NUMBER:score}&zone0=%{DATA}&id0=%{NUMBER:rule_id}&var_name0=%{DATA}&zone1=%{DATA}&id1=%{NUMBER}&var_name1=%{DATA}, client: %{IPORHOST:source_ip}, server: %{IPORHOST:server_hostname}, request: "%{DATA:request}", host: %{DATA}, referrer: "%{DATA:referrer}"'
+     apply_on: message
+statics:
+  - meta: log_type
+    value: waf_attack_event
+  - target: evt.StrTime
+    expression: evt.Parsed.timestamp
+  - meta: source_ip
+    expression: evt.Parsed.source_ip
+  - meta: http_request
+    expression: evt.Parsed.request
+  - meta: service
+    value: naxsi 
