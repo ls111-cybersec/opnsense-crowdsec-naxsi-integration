@@ -84,7 +84,7 @@ on_success: break
 
 If you attempt to simulate an injection attack against your web app, you will note that NAXSI intercepts this as well as bans the attacker IP address for the duration you specified making the WAF solution more complete.
 
-While OPNSense allows you to install the CrowdSec plugin using the GUI, you can only make partial changes to it using the GUI hence why we need to do everything in shell. CrowdSec comes with is own build in command line tool access it typing ```cscli -h``` and you will have full control over your CrowdSec deployment. 
+While OPNSense allows you to install the CrowdSec plugin using the GUI, you can only make partial changes to it using the GUI hence why we need to do everything in shell. CrowdSec comes with its own built in command line tool, access it by typing ```cscli -h``` and you will have full control over your CrowdSec deployment. 
 
 ```
 cscli is the main command to interact with your crowdsec service, scenarios & db.
