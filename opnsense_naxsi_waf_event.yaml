@@ -1,0 +1,12 @@
+type: trigger
+name: ls111/opnsense_naxsi_waf_event
+description: "Detects if NAXSI has triggered a security event in accordance with its WAF policies"
+filter: evt.Meta.log_type == 'waf_attack_event'
+groupby: evt.Meta.source_ip
+labels:
+  service: naxsi
+  type: waf_security_event
+  remediation: true
+scope:
+  type: Ip
+  expression: evt.Meta.source_ip
